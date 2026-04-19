@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Admin Portal{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <div class="bg-orb orb-one admin-orb"></div>
+    <div class="bg-orb orb-two admin-orb"></div>
+    <header class="top-nav">
+        <div class="container nav-content">
+            <a class="brand" href="{{ url_for('admin_dashboard') if session.get('admin_logged_in') else url_for('admin_login') }}"><span class="brand-mark admin-mark">AD</span><span>TransitVoice Admin</span></a>
+            <nav class="main-nav">
+                {% if session.get('admin_logged_in') %}
+                <a href="{{ url_for('admin_dashboard') }}" class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}"><span class="nav-ico">▣</span><span>Dashboard</span></a>
+                <a href="{{ url_for('admin_analytics') }}" class="nav-link {% if request.endpoint == 'admin_analytics' %}active{% endif %}"><span class="nav-ico">◔</span><span>Analytics</span></a>
+                {% endif %}
+            </nav>
+            <div class="nav-actions">
+                {% if session.get('admin_logged_in') %}
+                <a href="{{ url_for('admin_logout') }}" class="logout-link">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="page-main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-wrapper">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Profile | TransitVoice{% endblock %}
+
+{% block content %}
+<section class="section-space">
+    <div class="container">
+        <div class="dashboard-hero reveal">
+            <div>
+                <p class="eyebrow">Profile</p>
+                <h2>{{ username }}</h2>
+                <p>{{ email }}</p>
+                <div class="profile-chip-row">
+                    <span class="profile-chip">👤 User Account</span>
+                    <span class="profile-chip">🔔 Live Updates</span>
+                    <span class="profile-chip">📎 Image Attached Reports</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid reveal delay-1">
+            <div class="stat-card">
+                <strong data-stat="complaint_count">{{ complaint_count }}</strong>
+                <span>Total Complaints</span>
+            </div>
+            <div class="stat-card">
+                <strong data-stat="pending_count">{{ pending_count }}</strong>
+                <span>Pending</span>
+            </div>
+            <div class="stat-card">
+                <strong data-stat="in_progress_count">{{ in_progress_count }}</strong>
+                <span>In Progress</span>
+            </div>
+            <div class="stat-card">
+                <strong data-stat="resolved_count">{{ resolved_count }}</strong>
+                <span>Resolved</span>
+            </div>
+        </div>
+
+        <div class="profile-grid">
+            <div class="panel reveal delay-1">
+                <h3>Account Summary</h3>
+                <div class="profile-info">
+                    <p><strong>Username:</strong> {{ username }}</p>
+                    <p><strong>Email:</strong> {{ email }}</p>
+                    <p><strong>Access:</strong> User Account</p>
+                    <p><strong>Mode:</strong> Complaint tracking enabled</p>
+                </div>
+            </div>
+
+            <div class="panel reveal delay-2">
+                <h3>Quick Options</h3>
+                <div class="quick-links">
+                    <a href="{{ url_for('new_complaint') }}">📝 File a new complaint</a>
+                    <a href="{{ url_for('complaints') }}">📋 Track all complaints</a>
+                    <a href="{{ url_for('services') }}">ℹ️ Read service details</a>
+                    <a href="{{ url_for('logout') }}">🚪 Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel reveal delay-2">
+            <div class="section-inline-title">
+                <h3>Recent Complaints</h3>
+                <span class="section-note">Statuses update automatically from admin action.</span>
+            </div>
+            {% if complaints %}
+            <div class="profile-cards">
+                {% for item in complaints %}
+                <article class="profile-complaint-card">
+                    <div>
+                        <span class="tag">{{ item.transport_type }}</span>
+                        <span class="status-pill status-{{ item.status|lower|replace(' ', '-') }}" data-complaint-status="{{ item.id }}">{{ item.status }}</span>
+                    </div>
+                    <h4>#{{ item.id }}</h4>
+                    {% if item.vehicle_number %}
+                    <p class="meta">Vehicle: {{ item.vehicle_number }}</p>
+                    {% endif %}
+                    <p>{{ item.description }}</p>
+                    <small>Submitted: {{ item.created_at }}</small>
+                    {% if item.updated_at %}
+                    <small data-complaint-updated="{{ item.id }}">Updated: {{ item.updated_at }}</small>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="empty-state">No complaints submitted yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

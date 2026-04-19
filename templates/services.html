@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Services | TransitVoice{% endblock %}
+
+{% block content %}
+<section class="section-space">
+    <div class="container">
+        <div class="page-header reveal">
+            <div>
+                <p class="eyebrow">Services</p>
+                <h2>How TransitVoice helps passengers and administrators.</h2>
+            </div>
+            <div class="page-header-icon">⚡</div>
+        </div>
+
+        <div class="feature-grid">
+            <article class="feature-card reveal delay-1">
+                <div class="card-icon">🎯</div>
+                <h3>Purpose of the System</h3>
+                <p>
+                    Provide one clean digital platform where people can report service issues quickly,
+                    including delays, cleanliness concerns, safety problems, staff behavior, and fare disputes.
+                </p>
+            </article>
+
+            <article class="feature-card reveal delay-2">
+                <div class="card-icon">🗂️</div>
+                <h3>How Complaints Are Handled</h3>
+                <p>
+                    Complaints are captured with required details and an uploaded image,
+                    stored securely in SQLite, and reviewed by the admin for status updates and resolution tracking.
+                </p>
+            </article>
+
+            <article class="feature-card reveal delay-3">
+                <div class="card-icon">🌈</div>
+                <h3>Benefits to the Public</h3>
+                <p>
+                    Faster issue visibility, improved accountability, better travel experience,
+                    and live status tracking that keeps users informed until resolution.
+                </p>
+            </article>
+        </div>
+
+        <div class="panel reveal delay-2 service-strip">
+            <div class="service-stat"><span>📱</span><strong>Mobile-friendly</strong><p>Works well on phones, tablets, and desktops.</p></div>
+            <div class="service-stat"><span>🔔</span><strong>Flash updates</strong><p>Success and error feedback appears instantly.</p></div>
+            <div class="service-stat"><span>📈</span><strong>Status progress</strong><p>Pending, In Progress, Resolved, and Rejected are visible to users.</p></div>
+        </div>
+
+        <div class="services-footer reveal delay-2">
+            <div class="footer-contact-grid footer-contact-grid-compact">
+                <div class="footer-contact-item">
+                    <span>📩</span>
+                    <div>
+                        <strong>support@transitvoice.com</strong>
+                        <p>Email us for help</p>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <span>📞</span>
+                    <div>
+                        <strong>+91 98765 43210</strong>
+                        <p>Call for support</p>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <span>🕒</span>
+                    <div>
+                        <strong>Mon-Sat, 9 AM to 6 PM</strong>
+                        <p>Support hours</p>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <span>💬</span>
+                    <div>
+                        <strong>Complaint follow-up</strong>
+                        <p>Status and resolution help</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

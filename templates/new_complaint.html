@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}New Complaint | TransitVoice{% endblock %}
+
+{% block content %}
+<section class="section-space">
+    <div class="container">
+        <div class="page-header reveal">
+            <div>
+                <p class="eyebrow">New Complaint</p>
+                <h2>Submit a transport issue with evidence.</h2>
+            </div>
+            <div class="page-header-icon">📝</div>
+        </div>
+
+        <div class="panel form-panel reveal">
+            <div class="form-header-row">
+                <h3>Complaint Details</h3>
+                <span class="form-badge">All fields required</span>
+            </div>
+            <p class="form-note">Fill in every field and upload a supporting image before submitting.</p>
+            <form method="POST" action="{{ url_for('new_complaint') }}" enctype="multipart/form-data" id="complaintForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" id="contact" name="contact" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transport_type">Transportation Type</label>
+                        <select id="transport_type" name="transport_type" required>
+                            <option value="" selected disabled>Select transport type</option>
+                            <option value="Bus">Bus</option>
+                            <option value="Train">Train</option>
+                            <option value="Auto">Auto</option>
+                            <option value="Metro">Metro</option>
+                            <option value="Taxi">Taxi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group form-group-full" id="vehicleNumberGroup" style="display: none;">
+                        <label for="vehicle_number" id="vehicleNumberLabel">Vehicle Number</label>
+                        <input type="text" id="vehicle_number" name="vehicle_number" placeholder="Enter vehicle number" required />
+                        <small class="field-hint" id="vehicleNumberHint">This will update based on the selected transport type.</small>
+                    </div>
+
+                    <div class="form-group form-group-full">
+                        <label for="description" id="descriptionLabel">Complaint Description</label>
+                        <textarea id="description" name="description" rows="5" required></textarea>
+                        <small class="field-hint" id="descriptionHint">Please describe the complaint clearly.</small>
+                    </div>
+
+                    <div class="form-group form-group-full">
+                        <label for="image">Upload Image</label>
+                        <input type="file" id="image" name="image" accept="image/*" required />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Complaint</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

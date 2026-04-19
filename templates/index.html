@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Home | TransitVoice{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-copy reveal">
+            <p class="eyebrow">Public Transportation Complaint Management System</p>
+            <h1>Report transport issues with clarity, speed, and visible status tracking.</h1>
+            <p class="hero-lead">
+                TransitVoice helps passengers raise issues for bus, train, metro, auto, and taxi services,
+                attach evidence, and watch every complaint move from pending to resolved.
+            </p>
+            <div class="hero-actions">
+                <a href="{{ url_for('new_complaint') }}" class="btn-primary"><span>＋</span><span>Start New Complaint</span></a>
+                <a href="{{ url_for('complaints') }}" class="btn-secondary"><span>▤</span><span>Browse Complaints</span></a>
+            </div>
+            <div class="hero-points">
+                <span><strong>Fast</strong> complaint submission</span>
+                <span><strong>Visible</strong> admin status updates</span>
+                <span><strong>Secure</strong> SQLite storage</span>
+            </div>
+        </div>
+        <div class="hero-visual reveal delay-1">
+            <div class="hero-image-stack">
+                <img src="{{ url_for('homepage_image', filename='base.PNG') }}" alt="Transit complaint reporting" class="hero-image hero-image-main" />
+            </div>
+            <div class="hero-mini-cards">
+                <div class="mini-card">
+                    <span>📍</span>
+                    <div>
+                        <strong>Location aware</strong>
+                        <p>Helpful for route and stoppage issues.</p>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <span>🖼️</span>
+                    <div>
+                        <strong>Image proof</strong>
+                        <p>Upload supporting evidence with every complaint.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-space section-breathe">
+    <div class="container">
+        <div class="section-heading reveal">
+            <div>
+                <p class="eyebrow">Supported Transport Modes</p>
+                <h2>Choose the transport type that matches the issue.</h2>
+            </div>
+            <p class="section-note">Each transport mode below maps to the complaint categories you can select while filing a report.</p>
+        </div>
+        <div class="mode-grid">
+            <article class="mode-card reveal delay-1">
+                <img src="{{ url_for('homepage_image', filename='bus.png') }}" alt="Bus mode" />
+                <div>
+                    <h3>Bus</h3>
+                    <p>Ideal for route delays, overcrowding, rude behavior, and vehicle cleanliness issues.</p>
+                </div>
+            </article>
+            <article class="mode-card reveal delay-2">
+                <img src="{{ url_for('homepage_image', filename='train.png') }}" alt="Train mode" />
+                <div>
+                    <h3>Train</h3>
+                    <p>Report platform congestion, service interruptions, maintenance issues, and schedule problems.</p>
+                </div>
+            </article>
+            <article class="mode-card reveal delay-3">
+                <img src="{{ url_for('homepage_image', filename='metro.png') }}" alt="Metro mode" />
+                <div>
+                    <h3>Metro</h3>
+                    <p>Use this for station cleanliness, security concerns, or service timing complaints.</p>
+                </div>
+            </article>
+            <article class="mode-card reveal delay-1">
+                <img src="{{ url_for('homepage_image', filename='auto.png') }}" alt="Auto mode" />
+                <div>
+                    <h3>Auto</h3>
+                    <p>Capture fare disputes, route refusal, overcharging, and service quality issues.</p>
+                </div>
+            </article>
+            <article class="mode-card reveal delay-2">
+                <img src="{{ url_for('homepage_image', filename='taxi.png') }}" alt="Taxi mode" />
+                <div>
+                    <h3>Taxi</h3>
+                    <p>Great for driver conduct, billing mismatch, unsafe driving, and trip experience feedback.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section-space section-breathe">
+    <div class="container info-band reveal">
+        <div class="info-pill">
+            <span>🧭</span>
+            <div><strong>Step 1</strong><p>Login or sign up to access the system.</p></div>
+        </div>
+        <div class="info-pill">
+            <span>📝</span>
+            <div><strong>Step 2</strong><p>Submit complaint details and upload an image.</p></div>
+        </div>
+        <div class="info-pill">
+            <span>🛠️</span>
+            <div><strong>Step 3</strong><p>Admin reviews and changes complaint status.</p></div>
+        </div>
+        <div class="info-pill">
+            <span>✅</span>
+            <div><strong>Step 4</strong><p>User sees live progress in profile and history pages.</p></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

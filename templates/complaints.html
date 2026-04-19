@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Complaints | TransitVoice{% endblock %}
+
+{% block content %}
+<section class="section-space">
+    <div class="container">
+        <div class="page-header reveal">
+            <div>
+                <p class="eyebrow">Complaints</p>
+                <h2>Track every complaint in one place.</h2>
+            </div>
+            <a href="{{ url_for('new_complaint') }}" class="btn-secondary">＋ New Complaint</a>
+        </div>
+
+        <form class="filter-form reveal delay-1" method="GET" action="{{ url_for('complaints') }}">
+            <label for="transport_type">Filter by Transportation Type</label>
+            <select id="transport_type" name="transport_type" onchange="this.form.submit()">
+                {% set options = ['All', 'Bus', 'Train', 'Auto', 'Metro', 'Taxi'] %}
+                {% for option in options %}
+                <option value="{{ option }}" {% if selected_type == option %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            <span class="filter-hint">Use the dropdown to focus on a single transport mode.</span>
+        </form>
+
+        <div class="card-grid">
+            {% for item in complaints %}
+            <article class="complaint-card reveal">
+                <div class="image-wrap">
+                    {% if item.image_path %}
+                    <img src="{{ url_for('static', filename=item.image_path) }}" alt="Complaint image" />
+                    {% else %}
+                    <img src="{{ url_for('static', filename='uploads/placeholder.svg') }}" alt="No image uploaded" />
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="card-topline">
+                        <span class="tag">{{ item.transport_type }}</span>
+                        <span class="status-pill status-{{ item.status|lower|replace(' ', '-') }}">{{ item.status }}</span>
+                    </div>
+                    {% if item.vehicle_number %}
+                    <p class="meta">🚍 Vehicle: {{ item.vehicle_number }}</p>
+                    {% endif %}
+                    <p class="meta">👤 {{ item.name }} | ⏱ {{ item.created_at }}</p>
+                    {% if item.updated_at %}
+                    <p class="meta">🔄 Updated: {{ item.updated_at }}</p>
+                    {% endif %}
+                    <p class="description">{{ item.description }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% if not complaints %}
+        <p class="empty-state">No complaints found for this filter.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

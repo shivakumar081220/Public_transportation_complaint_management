@@ -1,0 +1,96 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin Dashboard | TransitVoice{% endblock %}
+
+{% block content %}
+<section class="section-space">
+    <div class="container">
+        <div class="dashboard-hero reveal">
+            <div>
+                <p class="eyebrow">Admin Dashboard</p>
+                <h2>{{ current_user.username }}</h2>
+                <p>{{ current_user.email }}</p>
+                <div class="profile-chip-row">
+                    <span class="profile-chip">🛡️ Admin Review</span>
+                    <span class="profile-chip">📊 Complaint Analytics</span>
+                    <span class="profile-chip">✅ Status Control</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid reveal delay-1">
+            <div class="stat-card stat-card-total"><span>📌</span><strong>{{ summary.total_count|default(0, true) }}</strong><span>Total</span></div>
+            <div class="stat-card stat-card-pending"><span>⏳</span><strong>{{ summary.pending_count|default(0, true) }}</strong><span>Pending</span></div>
+            <div class="stat-card stat-card-progress"><span>🔄</span><strong>{{ summary.progress_count|default(0, true) }}</strong><span>In Progress</span></div>
+            <div class="stat-card stat-card-resolved"><span>🏁</span><strong>{{ summary.resolved_count|default(0, true) }}</strong><span>Resolved</span></div>
+        </div>
+
+        <div class="panel reveal delay-2">
+            <div class="section-inline-title">
+                <h3>All Submitted Complaints</h3>
+                <span class="section-note">Update complaint status from this table.</span>
+            </div>
+            {% if complaints %}
+            <div class="table-wrap admin-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Transport</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Admin Description</th>
+                            <th>Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set statuses = ['Pending', 'In Progress', 'Resolved', 'Rejected'] %}
+                        {% for item in complaints %}
+                        <tr>
+                            <td>#{{ item.id }}</td>
+                            <td>
+                                <div>{{ item.name }}</div>
+                                <small>{{ item.user_email or 'No linked user' }}</small>
+                            </td>
+                            <td>{{ item.transport_type }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>
+                                {% if item.image_path %}
+                                <img class="table-thumb" src="{{ url_for('static', filename=item.image_path) }}" alt="Complaint image" />
+                                {% else %}
+                                <img class="table-thumb" src="{{ url_for('static', filename='uploads/placeholder.svg') }}" alt="No image uploaded" />
+                                {% endif %}
+                            </td>
+                            <td><span class="status-pill status-{{ item.status|lower|replace(' ', '-') }}">{{ item.status }}</span></td>
+                            <td>
+                                {% if item.admin_message %}
+                                <p class="meta">{{ item.admin_message }}</p>
+                                {% else %}
+                                <p class="meta">No admin message yet.</p>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="POST" action="{{ url_for('update_status', complaint_id=item.id) }}" class="status-form">
+                                    <textarea name="admin_message" rows="3" placeholder="Enter admin description for user" required>{{ item.admin_message or '' }}</textarea>
+                                    <select name="status" required>
+                                        {% for status in statuses %}
+                                        <option value="{{ status }}" {% if item.status == status %}selected{% endif %}>{{ status }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn-secondary">Save</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="empty-state">No complaints have been submitted yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

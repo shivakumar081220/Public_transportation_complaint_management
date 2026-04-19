@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Public Transport Complaints{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="{% if not is_authenticated %}auth-locked{% endif %}">
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+    <header class="top-nav">
+        <div class="container nav-content">
+            <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">TV</span><span>TransitVoice</span></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"><span class="nav-ico">⌂</span><span>Home</span></a>
+                <a href="{{ url_for('services') }}" class="nav-link {% if request.endpoint == 'services' %}active{% endif %}"><span class="nav-ico">✦</span><span>Services</span></a>
+                <a href="{{ url_for('complaints') }}" class="nav-link {% if request.endpoint == 'complaints' %}active{% endif %}"><span class="nav-ico">☰</span><span>Complaints</span></a>
+            </nav>
+            {% if is_authenticated %}
+            <div class="nav-actions">
+                <a href="{{ profile_link }}" class="profile-icon" title="Profile" aria-label="Go to profile">👤</a>
+                <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+            </div>
+            {% else %}
+            <a href="{{ url_for('index', auth='login') }}" class="btn-secondary nav-login-link">Login</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="page-main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-wrapper">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if not is_authenticated %}
+    <div class="auth-modal-backdrop">
+        <div class="auth-card reveal">
+            <div class="auth-card-header">
+                <div>
+                    <p class="eyebrow">Access Required</p>
+                    <h2>Login or Sign Up</h2>
+                    <p class="auth-subtitle">Use your account to submit complaints, follow status changes, and review transport updates.</p>
+                </div>
+            </div>
+
+            <div class="auth-tabs" data-auth-tabs>
+                <button type="button" class="auth-tab {% if auth_tab != 'signup' %}active{% endif %}" data-target="login-panel">Login</button>
+                <button type="button" class="auth-tab {% if auth_tab == 'signup' %}active{% endif %}" data-target="signup-panel">Sign Up</button>
+            </div>
+
+            <div class="auth-panel {% if auth_tab != 'signup' %}active{% endif %}" id="login-panel">
+                <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" required />
+                    </div>
+                    <button type="submit" class="btn-primary auth-submit">Login</button>
+                </form>
+            </div>
+
+            <div class="auth-panel {% if auth_tab == 'signup' %}active{% endif %}" id="signup-panel">
+                <form method="POST" action="{{ url_for('signup') }}" class="auth-form">
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" name="username" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" name="confirm_password" required />
+                    </div>
+                    <button type="submit" class="btn-primary auth-submit">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
