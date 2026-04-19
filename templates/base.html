@@ -14,7 +14,7 @@
     <div class="bg-orb orb-two"></div>
     <header class="top-nav">
         <div class="container nav-content">
-            <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">TV</span><span>TransitVoice</span></a>
+            <a class="brand" href="{{ url_for('index') }}"><img class="brand-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="TransitVoice logo" /><span>TransitVoice</span></a>
             <nav class="main-nav">
                 <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"><span class="nav-ico">⌂</span><span>Home</span></a>
                 <a href="{{ url_for('services') }}" class="nav-link {% if request.endpoint == 'services' %}active{% endif %}"><span class="nav-ico">✦</span><span>Services</span></a>

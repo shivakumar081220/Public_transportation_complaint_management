@@ -14,7 +14,7 @@
     <div class="bg-orb orb-two admin-orb"></div>
     <header class="top-nav">
         <div class="container nav-content">
-            <a class="brand" href="{{ url_for('admin_dashboard') if session.get('admin_logged_in') else url_for('admin_login') }}"><span class="brand-mark admin-mark">AD</span><span>TransitVoice Admin</span></a>
+            <a class="brand" href="{{ url_for('admin_dashboard') if session.get('admin_logged_in') else url_for('admin_login') }}"><img class="brand-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="TransitVoice logo" /><span>TransitVoice Admin</span></a>
             <nav class="main-nav">
                 {% if session.get('admin_logged_in') %}
                 <a href="{{ url_for('admin_dashboard') }}" class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}"><span class="nav-ico">▣</span><span>Dashboard</span></a>

@@ -882,6 +882,13 @@ body {
     gap: 0.6rem;
 }
 
+.brand-logo {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    display: inline-block;
+}
+
 .brand-mark,
 .admin-mark {
     width: 2.15rem;
